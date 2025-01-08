@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: demo
+  r2dbc:
+    url: r2dbc:h2:mem:///test
+    username: sa
+    password:
+logging:
+  level:
+    org:
+      springframework:
+        r2dbc: DEBUG
+debug: true
