@@ -1,6 +1,8 @@
 package com.example.demo.post;
 
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @Service
 public class PostService {
@@ -10,11 +12,11 @@ public class PostService {
         this.postRepository = postRepository;
     }
 
-    public Post getManyPost() {
+    public Flux<Post> getManyPost() {
         return null; // TODO
     }
 
-    public PostMeta getOnePostMetadata() {
+    public Mono<PostMeta> getOnePostMetadata() {
         return null; // TODO
     }
 }
