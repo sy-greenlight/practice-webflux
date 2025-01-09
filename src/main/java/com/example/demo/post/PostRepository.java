@@ -1,20 +1,29 @@
 package com.example.demo.post;
 
+import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.time.Duration;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Repository
 public class PostRepository {
-    public static long postSeq = 1;
-    public static Map<Long, Post> postData = Map.of();
-    static {
-        for (; postSeq < 10; postSeq++) {
-            postData.put(postSeq, RandomPostGenerator.generate(postSeq));
+
+    public long postSeq = 1;
+    public Map<Long, Post> postData;
+
+    @PostConstruct
+    public void init() {
+        postData = new LinkedHashMap<>();
+        while (postSeq < 10) {
+            Post p = RandomPostGenerator.generate(postSeq);
+            System.out.println(postSeq + ", " + p);
+            postData.put(postSeq, p);
+            postSeq += 1;
         }
     }
 
@@ -35,6 +44,7 @@ public class PostRepository {
             return id;
         });
     }
+
     public Mono<Post> getOne(Long postId) {
         return Mono.just(postData.get(postId));
     }
